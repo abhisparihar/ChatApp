@@ -1,0 +1,74 @@
+<div class="container-xxl flex-grow-1 container-p-y">
+    <!-- Basic Layout & Basic with Icons -->
+    <div class="row field-wrapper">
+        <!-- Basic Layout -->
+        <div class="col-xxl">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form id="editForm" action="/users/edit/{{user._id}}" method="post" enctype="multipart/form-data">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="name" value="{{user.name}}" class="form-control"
+                                            id="basic-default-name" placeholder="John Doe">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label" for="basic-default-email">Email</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group input-group-merge">
+                                            <input type="text" id="email" class="form-control" name="email"
+                                                value="{{user.email}}" placeholder="john.doe" aria-label="john.doe"
+                                                aria-describedby="basic-default-email2">
+                                            <span class="input-group-text" id="basic-default-email2">@example.com</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label" for="basic-default-phone">Phone No</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="phone" class="form-control phone-mask" name="phone"
+                                            value="{{user.phone}}" placeholder="658 799 8941" aria-label="658 799 8941"
+                                            aria-describedby="basic-default-phone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label" for="basic-default-image">Image</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" id="basic-default-image" class="form-control profileImage"
+                                            name="profileImage" accept="image/jpeg,image/png">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="row">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="{{#if user.image}}{{user.image}}{{else}}/assets/img/avatars/avatar.png{{/if}}"
+                                    class="output" width="160" height="160" style="float: inline-end;" alt="">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="float: inline-end;">Submit</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Basic with Icons -->
+    </div>
+</div>
+<script src="/js/pagewise/user.js"></script>

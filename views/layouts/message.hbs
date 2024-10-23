@@ -1,0 +1,28 @@
+<html lang="en">
+
+<head>
+    {{> common/meta}}
+    {{> common/css}}
+    <!-- Helpers -->
+    <link href="/assets/css/toastr.min.css" rel="stylesheet" />
+    <script src="/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assets/vendor/libs/jquery/jquery-validator.js"></script>
+    <script src="/assets/vendor/libs/jquery/toastr.min.js"></script>
+
+    <script src="/assets/js/sweetalert2.all.min.js"></script>
+</head>
+
+<body class="sidebar-shrink">
+    {{> common/topbar}}
+    {{{body}}}
+
+    {{> common/js}}
+
+    {{#if flash}}
+    {{{flashMe flash}}}
+    {{/if}}
+
+    {{{_sections.script}}}
+</body>
+
+</html>
