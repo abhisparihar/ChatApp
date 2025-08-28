@@ -30,8 +30,7 @@ const detail = async (req, res, next) => {
         } else {
             user = await userModel.findOne({ _id: new ObjectId(_id) })
         }
-        
-        console.log("🚀 ~ detail ~ user:", user)
+
         res.render("pages/user-chat", {
             layout: 'message',
             title: "User Chat Details",

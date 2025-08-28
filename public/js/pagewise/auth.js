@@ -59,7 +59,6 @@ $(document).ready(() => {
                 },
                 error: function (error) {
                     if (error?.responseJSON?.error) {
-                        alert(1)
                         toastr.error(error.responseJSON.error);
                     }
                 }

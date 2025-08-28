@@ -9,33 +9,39 @@ const saltedSha512 = require('salted-sha512');
     try {
         console.log("Init script execution start", process.env.DB);
 
-        await mongoose.connect(process.env.DB);
-        console.log("Database connected successfully");
+        // 1. Connect to admin DB
+        const adminConn = new mongoose.mongo.MongoClient(process.env.MONGODB_ROOT_URL);
+        await adminConn.connect();
+        console.info('✅ Admin database connected.');
 
-        const admin = {
-            name: "Super Admin",
-            email: process.env.ADMIN_EMAIL,
-            password: saltedSha512(process.env.ADMIN_PASSWORD, process.env.SHA512_SALT_KEY),
-            mobile: process.env.ADMIN_MOBILE,
-            phone:"0000000000",
-            isAdmin: true
-        };
+        try {
+            const chatConn = new mongoose.mongo.MongoClient(process.env.DB);
+            await chatConn.connect();
+            console.log("Database connected successfully");
+        } catch (error) {
+            const db = adminConn.db("chat");
+            await db.command({
+                createUser: "chat",
+                pwd: "chat",
+                roles: [
+                    { role: 'dbAdmin', db: "chat" },
+                    { role: 'readWrite', db: "chat" }
+                ],
+            });
 
-        const isAdminExist = await userModel.countDocuments({ email: admin.email });
-
-        if (!isAdminExist) {
-            await userModel.create(admin);
-            console.log("Admin Created !!");
-        } else {
-            console.log("Admin Already Exists");
+            console.info('👤 Chat DB user created.');
+            // 3. Connect properly to tenant DB
+            await mongoose.connect(process.env.DB);
+            console.info('📡 Connected to chat database.');
         }
 
         console.log("Init Script Execution Done !!");
 
         process.exit(0);
     } catch (error) {
-        console.error("Error while init script execution !!");
-        console.log(error);
-        process.exit(1);
+        console.error("Error while init script execution !!", error);
+        setTimeout(() => {
+            process.exit(1);
+        }, 1000);
     }
 })();
